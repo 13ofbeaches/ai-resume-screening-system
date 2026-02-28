@@ -1,14 +1,16 @@
 import ollama
 import json
+from database import get_prompt
 
 
 def classify_candidate(candidate_data):
 
-    # Read HR editable prompt
-    with open("classification_prompt.txt", "r") as f:
-        hr_prompt = f.read()
+    # Get prompt from SQLite
+    hr_prompt = get_prompt("classification")
 
-    # Locked system output format
+    if not hr_prompt:
+        return "No classification prompt found in database"
+
     system_instruction = """
 Return your answer strictly in this JSON format:
 
