@@ -1,0 +1,5 @@
+boto3
+PyPDF2
+python-dotenv
+twilio
+ollama
