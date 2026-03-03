@@ -35,18 +35,37 @@ def init_db():
     conn.close()
 
 
-def insert_candidate(name, email, phone, location, s3_url):
+def insert_candidate(name, email, phone, location, s3_url, skills):
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
 
     cursor.execute("""
-    INSERT INTO candidates (name, email, phone, location, s3_url)
-    VALUES (?, ?, ?, ?, ?)
-    """, (name, email, phone, location, s3_url))
+    INSERT INTO candidates (
+        name, email, phone, location, s3_url, skills, status
+    )
+    VALUES (?, ?, ?, ?, ?, ?, ?)
+    """, (name, email, phone, location, s3_url, skills, "pending"))
+
+    conn.commit()
+
+    candidate_id = cursor.lastrowid  # 🔥 important
+
+    conn.close()
+
+    return candidate_id
+
+def update_candidate_category(candidate_id, category):
+    conn = sqlite3.connect(DB_NAME)
+    cursor = conn.cursor()
+
+    cursor.execute("""
+    UPDATE candidates
+    SET category = ?, status = ?
+    WHERE id = ?
+    """, (category, "processed", candidate_id))
 
     conn.commit()
     conn.close()
-
 
 def update_prompt(prompt_type, content):
     conn = sqlite3.connect(DB_NAME)
@@ -78,3 +97,32 @@ def get_prompt(prompt_type):
         return result[0]
     else:
         return None
+    
+def get_all_candidates():
+    conn = sqlite3.connect(DB_NAME)
+    cursor = conn.cursor()
+
+    cursor.execute("""
+    SELECT id, name, email, phone, location, s3_url, skills, category, status
+    FROM candidates
+    """)
+
+    rows = cursor.fetchall()
+    conn.close()
+
+    candidates = []
+
+    for row in rows:
+        candidates.append({
+            "id": row[0],
+            "name": row[1],
+            "email": row[2],
+            "phone": row[3],
+            "location": row[4],
+            "s3_url": row[5],
+            "skills": row[6],
+            "category": row[7],
+            "status": row[8]
+        })
+
+    return candidates

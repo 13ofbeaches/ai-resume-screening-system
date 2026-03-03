@@ -1,27 +1,54 @@
 from fastapi import FastAPI
-from typing import Dict
+from fastapi.middleware.cors import CORSMiddleware
+
+from database import (
+    get_all_candidates,
+    insert_candidate,
+    update_candidate_category
+)
+
 from processor import classify_candidate
+
 
 app = FastAPI()
 
-results_store: Dict[int, dict] = {}
-current_id = 1
+# ✅ Enable CORS so Next.js can call FastAPI
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.get("/")
 def home():
     return {"message": "Resume Screening API is running"}
 
+
+# 🔹 Submit Resume Endpoint
 @app.get("/submit")
 def submit_resume(
     name: str,
+    email: str,
+    phone: str,
     location: str,
     skills: str,
     resume_text: str
 ):
-    global current_id
 
-    # Prepare candidate data dictionary
+    # Step 1 — Insert candidate into DB
+    candidate_id = insert_candidate(
+        name=name,
+        email=email,
+        phone=phone,
+        location=location,
+        s3_url="manual_upload",
+        skills=skills
+    )
+
+    # Step 2 — Run AI classification
     candidate_data = {
         "name": name,
         "location": location,
@@ -29,29 +56,24 @@ def submit_resume(
         "resume_text": resume_text
     }
 
-    # Call your LLM classifier
-    result = classify_candidate(candidate_data)
+    category = classify_candidate(candidate_data)
 
-    # Store result
-    results_store[current_id] = {
-        "name": name,
-        "location": location,
-        "skills": skills,
-        "result": result
-    }
+    # Step 3 — Update DB with classification result
+    update_candidate_category(candidate_id, category)
 
-    response = {
+    return {
         "message": "Resume submitted successfully",
-        "candidate_id": current_id
+        "candidate_id": candidate_id,
+        "category": category
     }
 
-    current_id += 1
 
-    return response
+# 🔹 Get All Candidates (Metadata + Result)
+@app.get("/candidates")
+def get_candidates():
+    data = get_all_candidates()
 
-@app.get("/result/{candidate_id}")
-def get_result(candidate_id: int):
-    if candidate_id not in results_store:
-        return {"error": "Candidate not found"}
-
-    return results_store[candidate_id] 
+    return {
+        "total_candidates": len(data),
+        "data": data
+    }
