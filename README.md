@@ -1,45 +1,123 @@
-# AI Resume Screening System
+🚀 AI Resume Screening System
 
-An AI-powered automated hiring pipeline that:
+A full-stack AI-powered resume screening platform built using:
 
-- Stores candidate data in SQLite
-- Stores resumes in AWS S3
-- Downloads and parses resume text
-- Uses LLM (Ollama) for classification
-- Sends automated email & WhatsApp notifications
-- Uses database-driven configurable prompts
+FastAPI (Backend API)
 
-## Architecture
+Next.js 16 (Frontend UI)
 
-Candidate → SQLite → S3 → Processor → LLM → Notification Agent
+SQLite (Database)
 
-## Features
+LLM-based Classification
 
-- Dynamic HR-editable classification rules
-- Dynamic email templates stored in DB
-- Secure secrets using .env
-- WhatsApp integration using Twilio
-- Fully modular backend design
+AWS S3 Integration (optional)
 
-## Setup
+Email & WhatsApp Notifications
 
-1. Install dependencies:
-   pip install -r requirements.txt
+📌 Project Architecture
+ai-resume-screening-system/
+│
+├── backend/      → FastAPI backend & database logic
+├── frontend/     → Next.js frontend application
+└── README.md
+⚙️ Backend (FastAPI)
 
-2. Create .env file with:
-   SENDER_EMAIL=
-   SENDER_PASSWORD=
-   TWILIO_SID=
-   TWILIO_AUTH=
-   TWILIO_WHATSAPP_NUMBER=
+Located in:
 
-3. Initialize database:
-   python
-   import database
-   database.init_db()
+backend/
+Features:
 
-4. Run processor:
-   python processor.py
+Resume submission endpoint
 
-5. Run notification agent:
-   python notification_agent.py
+Candidate classification using LLM
+
+SQLite database storage
+
+Candidate status tracking
+
+REST API endpoints
+
+Run Backend
+cd backend
+uvicorn api:app --reload
+
+API runs at:
+
+http://127.0.0.1:8000
+
+Available endpoints:
+
+GET /submit
+
+GET /candidates
+
+GET /result/{id}
+
+🎨 Frontend (Next.js)
+
+Located in:
+
+frontend/
+Features:
+
+Resume submission form
+
+Real-time API integration
+
+Displays classification result
+
+Run Frontend
+cd frontend
+npm install
+npm run dev
+
+Frontend runs at:
+
+http://localhost:3000
+🧠 How It Works
+
+User submits resume via frontend.
+
+Frontend calls FastAPI backend.
+
+Backend stores candidate in SQLite.
+
+LLM classifies candidate.
+
+Status updated to "processed".
+
+Result returned to frontend.
+
+📦 Tech Stack
+
+Python 3.13
+
+FastAPI
+
+SQLite
+
+Next.js 16
+
+Node.js 24 LTS
+
+Ollama (LLM runtime)
+
+🔥 Future Improvements
+
+Switch GET → POST with Pydantic validation
+
+Add Authentication
+
+Deploy backend (Render/Railway)
+
+Deploy frontend (Vercel)
+
+Add admin dashboard
+
+Add async DB layer
+
+Dockerize system
+
+👨‍💻 Author
+
+Sarvesh Karthik
